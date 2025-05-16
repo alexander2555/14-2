@@ -1,3 +1,13 @@
+/**
+ * Создает HTML-элемент задачи
+ * 
+ * @param {object} task - объект задачи:
+  * @param {string} task.id - уникальный идентификатор задачи
+  * @param {boolean} task.completed - статус выполнения задачи
+  * @param {string} task.text - текст задачи
+ * 
+ * @returns {string} - HTML-элемент задачи
+ */
 const createTaskElement = task => {
   const taskItem = document.createElement('div')
   taskItem.classList.add('task-item')
@@ -23,7 +33,7 @@ const createTaskElement = task => {
     `
   return taskItem
 }
-
+// Массив задач
 const tasks = [
   {
       id: '1138465078061',
@@ -41,9 +51,9 @@ const tasks = [
       text: 'Выполнить ДЗ после урока',
   },
 ]
-
+// Контейнер для задач
 const tasksContainer = document.querySelector('.tasks-list')
-
+// Рендерим задачи
 tasks.forEach(task => {
   const taskElement = createTaskElement(task)
   tasksContainer.append(taskElement)
