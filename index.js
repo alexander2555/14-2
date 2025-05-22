@@ -1,11 +1,11 @@
 /**
  * Создает HTML-элемент задачи
- * 
+ *
  * @param {object} task - объект задачи:
-  * @param {string} task.id - уникальный идентификатор задачи
-  * @param {boolean} task.completed - статус выполнения задачи
-  * @param {string} task.text - текст задачи
- * 
+ * @param {string} task.id - уникальный идентификатор задачи
+ * @param {boolean} task.completed - статус выполнения задачи
+ * @param {string} task.text - текст задачи
+ *
  * @returns {string} - HTML-элемент задачи
  */
 const createTaskElement = task => {
@@ -16,7 +16,8 @@ const createTaskElement = task => {
       <div class="task-item__main-container">
           <div class="task-item__main-content">
               <form class="checkbox-form">
-                  <input class="checkbox-form__checkbox"
+                  <input
+                    class="checkbox-form__checkbox"
                     type="checkbox"
                     id="task-${task.id}"
                     ${task.completed ? 'checked="true"' : ''}>
@@ -36,19 +37,19 @@ const createTaskElement = task => {
 // Массив задач
 const tasks = [
   {
-      id: '1138465078061',
-      completed: false,
-      text: 'Посмотреть новый урок по JavaScript',
+    id: '1138465078061',
+    completed: false,
+    text: 'Посмотреть новый урок по JavaScript',
   },
   {
-      id: '1138465078062',
-      completed: false,
-      text: 'Выполнить тест после урока',
+    id: '1138465078062',
+    completed: false,
+    text: 'Выполнить тест после урока',
   },
   {
-      id: '1138465078063',
-      completed: false,
-      text: 'Выполнить ДЗ после урока',
+    id: '1138465078063',
+    completed: false,
+    text: 'Выполнить ДЗ после урока',
   },
 ]
 // Контейнер для задач
@@ -57,4 +58,20 @@ const tasksContainer = document.querySelector('.tasks-list')
 tasks.forEach(task => {
   const taskElement = createTaskElement(task)
   tasksContainer.append(taskElement)
+})
+// Добавляем задачу с помощью формы
+const form = document.querySelector('.create-task-block')
+form.addEventListener('submit', event => {
+  event.preventDefault()
+  const text = event.target.taskName.value
+  if (!text) {
+    alert('Введите текст задачи!')
+    return
+  }
+  const newTaskEl = createTaskElement({
+    id: Date.now().toString(),
+    completed: false,
+    text,
+  })
+  tasksContainer.append(newTaskEl)
 })
