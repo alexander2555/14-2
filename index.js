@@ -34,6 +34,7 @@ const createTaskElement = task => {
     `
   return taskItem
 }
+
 // Массив задач
 const tasks = [
   {
@@ -59,20 +60,45 @@ tasks.forEach(task => {
   const taskElement = createTaskElement(task)
   tasksContainer.append(taskElement)
 })
+
+/* 15. Формы */
+
 // Добавляем задачу с помощью формы
 const form = document.querySelector('.create-task-block')
+
 form.addEventListener('submit', event => {
   event.preventDefault()
+
   const text = event.target.taskName.value
-  if (!text) {
-    alert('Введите текст задачи!')
+  // валидация ввода
+  const validationError = validation(text)
+  let validationErrorEl = document.querySelector('.error-message-block')
+  if (validationError) {
+    if (!validationErrorEl) {
+      validationErrorEl = document.createElement('span')
+      validationErrorEl.classList.add('error-message-block')
+      form.append(validationErrorEl)
+    }
+    validationErrorEl.textContent = validationError
     return
   }
-  const newTaskEl = createTaskElement({
+  // валидация прошла успешно
+  if (validationErrorEl) validationErrorEl.remove()
+  // создаем новую задачу
+  const newTask = {
     id: Date.now().toString(),
     completed: false,
     text,
-  })
+  }
+  // добавляем новую задачу в массив задач и рендерим ее
   tasks.push(newTask)
+  const newTaskEl = createTaskElement(newTask)
   tasksContainer.append(newTaskEl)
 })
+// Валидация ввода текста задачи
+const validation = text => {
+  if (!text) return 'Название задачи не должно быть пустым'
+  const isTaskExists = tasks.some(task => task.text.trim() === text.trim())
+  if (isTaskExists) return 'Задача с таким текстом уже существует'
+  return ''
+}
