@@ -141,3 +141,28 @@ const deleteTask = taskItem => {
   console.log('deletedTask', deletedTask)
   taskItem.remove()
 }
+
+// Cмена темы
+document.addEventListener('keydown', event => {
+  const tabPressed = event.code === 'Tab'
+  if (tabPressed) {
+    event.preventDefault()
+    const body = document.body
+    const buttons = document.getElementsByTagName('button')
+    if (body.dataset.theme === 'dark') {
+      body.dataset.theme = ''
+      body.style.backgroundColor = 'inherit'
+      tasksContainer.style.color = 'inherit'
+      for (const button of buttons) {
+        button.style.border = 'none'
+      }
+    } else {
+      body.dataset.theme = 'dark'
+      body.style.backgroundColor = '#24292E'
+      tasksContainer.style.color = '#ffffff'
+      for (const button of buttons) {
+        button.style.border = '1px solid #ffffff'
+      }
+    }
+  }
+})
