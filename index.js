@@ -102,3 +102,42 @@ const validation = text => {
   if (isTaskExists) return 'Задача с таким текстом уже существует'
   return ''
 }
+
+// Удаление задачи
+const modal = document.querySelector('.modal-overlay')
+const modalDeleteButton = modal.querySelector('.delete-modal__confirm-button')
+const modalCancelButton = modal.querySelector('.delete-modal__cancel-button')
+const hideModalClass = 'modal-overlay_hidden'
+
+tasksContainer.addEventListener('click', event => {
+  const { target } = event
+  // делегируем событие клика на кнопку "Удалить"
+  const isDeleteButton = target.classList.contains('task-item__delete-button')
+  if (isDeleteButton) {
+    const taskItem = target.closest('.task-item')
+    modal.classList.remove(hideModalClass)
+    // нажатие на кнопку "Удалить" в модальном окне
+    modalDeleteButton.onclick = () => {
+      deleteTask(taskItem)
+      modal.classList.add(hideModalClass)
+      // обнуляем обработчик при закрытии модального окна
+      modalDeleteButton.onclick = null
+    }
+    // нажатие на кнопку "Отмена" в модальном окне
+    modalCancelButton.onclick = () => {
+      modal.classList.add(hideModalClass)
+      // обнуляем обработчик при закрытии модального окна
+      modalCancelButton.onclick = null
+    }
+  }
+})
+// удаляет задачу из массива задач и DOM
+const deleteTask = taskItem => {
+  const taskId = taskItem.dataset.taskId
+  const deletedTask = tasks.splice(
+    tasks.findIndex(task => task.id === taskId),
+    1
+  )
+  console.log('deletedTask', deletedTask)
+  taskItem.remove()
+}
