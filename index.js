@@ -50,6 +50,7 @@ const tasks = [
     id: '1138465078063',
     completed: false,
     text: 'Выполнить ДЗ после урока',
+
   },
 ]
 // Контейнер для задач
@@ -59,6 +60,7 @@ tasks.forEach(task => {
   const taskElement = createTaskElement(task)
   tasksContainer.append(taskElement)
 })
+
 // Добавляем задачу с помощью формы
 const form = document.querySelector('.create-task-block')
 form.addEventListener('submit', event => {
